@@ -51,11 +51,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let cell = tableView.dequeueReusableCellWithIdentifier("MyCell") as! MyCell
         
         let otherHeight = cell.bounds.height - cell.mainText.bounds.height
-        let padding : CGFloat = 4 + 4
+        let padding : CGFloat = 4 + 4//auto layout constraint - // reference cell design
         
         let content = texts[indexPath.row]
         
-        let heightOfText = heightForView(content, font: cell.mainText.font, width: cell.bounds.width - 8)
+        let paddingOfText : CGFloat = 8 // reference cell design
+        
+        let heightOfText = heightForView(content, font: cell.mainText.font, width: cell.bounds.width - paddingOfText)
         
         return heightOfText + otherHeight + padding
     }
