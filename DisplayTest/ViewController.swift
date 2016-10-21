@@ -47,30 +47,27 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return calcHeight(indexPath)
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier("MyCell") as! MyCell
+        
+        let otherHeight = cell.bounds.height - cell.mainText.bounds.height
+        let padding : CGFloat = 4 + 4
+        
+        let content = texts[indexPath.row]
+        
+        let heightOfText = heightForView(content, font: cell.mainText.font, width: cell.bounds.width - 8)
+        
+        return heightOfText + otherHeight + padding
     }
     
     func heightForView(text:String, font: UIFont, width: CGFloat) -> CGFloat{
         let label:UILabel = UILabel(frame: CGRectMake(0, 0, width, CGFloat.max))
         label.numberOfLines = 0
-        label.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        label.lineBreakMode = .ByWordWrapping
         label.font = font
         label.text = text
         label.sizeToFit()
         return label.bounds.height
-    }
-
-    
-    func calcHeight(index: NSIndexPath) -> CGFloat{
-        // Create a paragraph style with the desired line break mode
-        
-        let cell = tableView.dequeueReusableCellWithIdentifier("MyCell") as! MyCell
-        
-        let content = texts[index.row]
-        
-        let height = heightForView(content, font: cell.mainText.font, width: cell.bounds.width)
-        print("heigt: \(height)")
-        return height + 40
     }
 }
 
